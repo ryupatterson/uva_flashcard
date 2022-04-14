@@ -10,8 +10,6 @@ class Account {
 
   public function __construct() {
     $this->db = new Database();
-    $this->config = new Config();
-    $this->base_url = $this->config->getURL();
   }
 
   public function run($action) {
@@ -40,7 +38,7 @@ class Account {
         if (password_verify($_POST["password"], $data[0]["password"])) {
           $_SESSION["username"] = $data[0]["username"];
           $_SESSION["user_id"] = $data[0]["user_id"];
-          header("Location: {$this->base_url}/");
+          header("Location: /");
           return;
         } else {
           $error_msg = "Invalid Password";
@@ -60,7 +58,7 @@ class Account {
           $id = $this->db->query("select max(user_id) from user");
           $id = $id[0]["max(user_id)"];
           $_SESSION["user_id"] = $id;
-          header("Location: {$this->base_url}/");
+          header("Location: /");
           return;
         } else{
 
@@ -75,6 +73,6 @@ class Account {
   private function logout() {
     session_start(); // join existing session
     session_destroy(); // destroy existing session
-    header("Location: {$this->base_url}/"); // redirect to home page
+    header("Location: /"); // redirect to home page
   }
 }

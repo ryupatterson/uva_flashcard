@@ -11,8 +11,6 @@ class Home {
 
   public function __construct() {
     $this->db = new Database();
-    $this->config = new Config();
-    $this->base_url = $this->config->getURL();
   }
 
   public function run($action) {

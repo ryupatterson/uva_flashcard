@@ -12,13 +12,9 @@ spl_autoload_register(function($classname) {
 session_start();
 
 // general config option for setting base_url
-
-$config = new Config();
-$base_url = $config->getURL();
 // Parse the URL
 
 $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-$path = str_replace($base_url."/", "", $path);
 $parts = explode("/", $path);
 
 // path has a form "/account/login", "search/search_form", "quiz/quiz_form"

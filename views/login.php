@@ -25,7 +25,7 @@
     </header>
     <!--Main Content-->
     <section>
-      <form id="login_form" name='login' action="<?=$this->base_url?>/account/login/" onsubmit="return validate();" method="post">
+      <form id="login_form" name='login' action="/account/login/" onsubmit="return validate();" method="post">
         <div>
           <label for="username">Username</label>
           <input type="text" id="username" name="username"/>
