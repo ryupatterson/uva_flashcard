@@ -7,7 +7,7 @@ class Config {
   public $proj_id;
 
   public function __construct() {
-    $this->proj_id = "/";
+    $this->proj_id = $_SERVER["HOST_NAME"];
   }
 
   public function getURL() {
