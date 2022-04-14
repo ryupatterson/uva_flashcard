@@ -24,7 +24,7 @@ class Account {
       $this->logout();
       break;
     default:
-      $this->logout();
+      $this->login();
     }
 
   }

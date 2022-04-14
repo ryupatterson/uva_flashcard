@@ -20,6 +20,7 @@ $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 $path = str_replace($base_url."/", "", $path);
 $parts = explode("/", $path);
 
+print_r($parts);
 // path has a form "/account/login", "search/search_form", "quiz/quiz_form"
 // parts[0] => determines which controller (account, search, quiz)
 // parts[1] => determines which action/page
