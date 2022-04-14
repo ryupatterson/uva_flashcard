@@ -69,14 +69,14 @@ body {
 }
 :root {
   --main-theme: rgb(202, 24, 172);
-  --sub-theme: rgb(255, 146, 245, 0.6);
+  --sub-theme: rgb(255, 102, 102);
   --highlight-theme: rgb(227, 147, 147, 0.82);
   --optional-theme: rgb(236, 182, 102, 1);
 }
 
 header {
   display: grid; grid-template-columns: 1fr 1fr;
-  padding: 2.6rem 1.5rem;
+  padding: 1.6rem 1.5rem;
 }
 #header-logo #menus {
   display: none;
@@ -116,9 +116,14 @@ header {
 #header-logo i:hover {
   color: var(--main-theme);
 }
+
+#main-header {
+  background: var(--sub-theme);
+  opacity: 100%;
+}
 header p {
   justify-self: end;
-  color: var(--sub-theme);
+  color: white;
   font-size: 1.5rem;
 }
 header span {

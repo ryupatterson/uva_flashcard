@@ -20,10 +20,26 @@
   </head>
   <body>
   <!--Top Navigation / Header bar-->
-    <header>
-      <p>Home</p>
-      <p>Welcome <?=$_SESSION["username"] ?></p>
-      <li><a href="<?=$this->base_url?>/account/logout/">Log Out</a></li>
+    <header id="main-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-3" id="header-text">
+            <p>Welcome, <?=$_SESSION["username"]?></p>
+          </div>
+          <div class="col-2">
+            <p>My Decks</p>
+          </div>
+          <div class="col-2">
+            <p>Create Deck</p>
+          </div>
+          <div class="col-2">
+            <a href="<?=$this->base_url?>/account/logout"><p>Logout</p></a>
+          </div>
+          <div class="col-3">
+            <input type="text" name="search" value="">
+          </div>
+        </div>
+      </div>
     </header>
     <!--Main Content-->
 

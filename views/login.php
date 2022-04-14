@@ -20,11 +20,9 @@
   </head>
   <body>
   <!--Top Navigation / Header bar-->
-    <header>
-
-    </header>
     <!--Main Content-->
     <section>
+      <h1>Create Account</h1>
       <form id="login_form" name='login' action="<?=$this->base_url?>/account/login/" onsubmit="return validate();" method="post">
         <div>
           <label for="username">Username</label>
