@@ -22,8 +22,7 @@
   <!--Top Navigation / Header bar-->
     <header>
       <p>Home</p>
-      <p><?php $_SESSION["username"] ?></p>
-      <li><a href="<?=$this->base_url?>/account/logout">Log Out</a></li>
+      <li><a href="<?=$this->base_url?>/account/logout/">Log Out</a></li>
     </header>
     <!--Main Content-->
 

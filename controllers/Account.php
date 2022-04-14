@@ -73,6 +73,7 @@ class Account {
   }
 
   public function logout() {
+    echo "logout";
     session_start(); // join existing session
     session_destroy(); // destroy existing session
     header("Location: {$this->base_url}/"); // redirect to home page
