@@ -17,7 +17,7 @@ $config = new Config();
 $base_url = $config->getURL();
 
 $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-$path = str_replace($base_url."/", "", $path);
+#$path = str_replace($base_url."/", "", $path);
 $parts = explode("/", $path);
 
 print_r($parts);
