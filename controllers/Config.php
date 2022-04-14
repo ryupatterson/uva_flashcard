@@ -5,7 +5,6 @@
 
 class Config {
   public $proj_id;
-  public $;
 
   public function __construct() {
     $this->proj_id = "/";
