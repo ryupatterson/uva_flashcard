@@ -24,7 +24,7 @@ class Account {
       $this->logout();
       break;
     default:
-      $this->login();
+      $this->logout();
     }
 
   }
@@ -72,8 +72,7 @@ class Account {
     include "views/login.php";
   }
 
-  public function logout() {
-    echo "logout";
+  private function logout() {
     session_start(); // join existing session
     session_destroy(); // destroy existing session
     header("Location: {$this->base_url}/"); // redirect to home page
