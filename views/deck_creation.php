@@ -22,7 +22,18 @@
   <!--Top Navigation / Header bar-->
     <?php include "header.php" ?>
     <!--Main Content-->
-
+    <div class="container">
+      <h1>Create Deck</h1>
+      <form id="deck_form" name='deck_creation' action="<?=$this->base_url?>/deck/create_deck/" method="post">
+        <div>
+          <label for="deck_title">Title</label>
+          <input type="text" id="deck_title" name="deck_title"/>
+        </div>
+        <div>
+          <button type="submit">Create Deck</button>
+        </div>
+      </form>
+    </div>
     <!--Footer-->
     <footer>
       <div>

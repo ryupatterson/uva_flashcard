@@ -20,6 +20,9 @@ class Account {
     case "login":
       $this->login();
       break;
+    case "my_decks":
+      $this->my_decks();
+      break;
     case "logout":
       $this->logout();
       break;
@@ -72,6 +75,12 @@ class Account {
     include "views/login.php";
   }
 
+  public function my_decks(){
+    $my_decks = $this->db->query(
+      "select * from f_deck WHERE deck_id in (select deck_id from creates_deck where user_id = ?) group by deck_id;"
+    , "s", $_SESSION['user_id']);
+    include "views/my_decks.php";
+  }
   private function logout() {
     session_start(); // join existing session
     session_destroy(); // destroy existing session

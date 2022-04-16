@@ -22,7 +22,17 @@
   <!--Top Navigation / Header bar-->
     <?php include "header.php" ?>
     <!--Main Content-->
-
+    <div class="container">
+      <h1>My Decks</h1>
+      <table>
+        <?php
+        foreach ($my_decks as $deck):?>
+        <tr>
+          <td><?= $deck["title"]?></td>
+        </tr>
+        <?php endforeach; ?>
+      </table>
+    </div>
     <!--Footer-->
     <footer>
       <div>

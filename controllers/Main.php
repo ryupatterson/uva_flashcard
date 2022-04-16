@@ -20,6 +20,9 @@ class Main {
     case "home":
       $this->account($parts[1]);
       break;
+    case "deck":
+      $this->deck($parts[1]);
+      break;
     default:
       if (isset($_SESSION["username"])) { // user is already logged in, redirect to the search page
         $this->home("go_to_home");
@@ -39,5 +42,10 @@ class Main {
   public function home($action){
     $home = new Home();
     $home->run($action);
+  }
+
+  public function deck($action){
+    $deck = new Deck();
+    $deck->run($action);
   }
 }

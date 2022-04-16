@@ -22,7 +22,32 @@
   <!--Top Navigation / Header bar-->
     <?php include "header.php" ?>
     <!--Main Content-->
-
+    <div class="container">
+      <h1>Working on <?=$_SESSION['title']?></h1>
+      <table>
+        <?php
+        $entries = $this->db->query("select * FROM f_entry WHERE deck_id=?;","s",$_SESSION['deck_id']);
+        foreach ($entries as $entry):?>
+        <tr>
+          <td><?= $entry["entry_def"]?></td>
+          <td><?= $entry["entry_answer"]?></td>
+        </tr>
+        <?php endforeach; ?>
+      </table>
+      <form id="deck_form" name='deck_creation' action="<?=$this->base_url?>/deck/add_entry/" method="get">
+        <div>
+          <label for="entry_def">Word</label>
+          <input type="text" id="entry_def" name="entry_def"/>
+        </div>
+        <div>
+          <label for="entry_answer">Definition</label>
+          <input type="text" id="entry_answer" name="entry_answer"/>
+        </div>
+        <div>
+          <button type="submit">add</button>
+        </div>
+      </form>
+    </div>
     <!--Footer-->
     <footer>
       <div>
