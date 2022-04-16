@@ -16,7 +16,7 @@
         <a href="<?=$this->base_url?>/account/logout/"><p>Logout</p></a>
       </div>
       <div class="col-3">
-        <input type="text" name="search" value="">
+        <input type="text" name="search_bar" value="">
       </div>
     </div>
   </div>

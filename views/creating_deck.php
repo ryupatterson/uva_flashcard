@@ -23,7 +23,15 @@
     <?php include "header.php" ?>
     <!--Main Content-->
     <div class="container">
-      <h1>Working on <?=$_SESSION['title']?></h1>
+      <?php
+        $course = $this->db->query("select course_pn,course_nbr from assigned_to_course where deck_id = ?;","s",$_SESSION['deck_id']);
+        if($course){
+          $string = "(".$course[0]["course_pn"].$course[0]["course_nbr"].")";
+        } else{
+          $string = "";
+        }
+       ?>
+      <h1>Working on <?=$_SESSION['title']?> <?=$string?></h1>
       <table>
         <?php
         $entries = $this->db->query("select * FROM f_entry WHERE deck_id=?;","s",$_SESSION['deck_id']);

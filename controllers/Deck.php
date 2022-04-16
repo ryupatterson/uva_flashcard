@@ -45,12 +45,27 @@ class Deck {
     } else{
       // create entry in db;
       $title = $_POST["deck_title"];
-      $this->db->query("insert into f_deck (title, public) values (?,?);", "ss", $title,0);
+      $public = $_POST["make_public"];
+      if($public == 'on'){
+        $public = 1;
+      } else{
+        $public = 0;
+      }
+      $this->db->query("insert into f_deck (title, public) values (?,?);", "ss", $title,$public);
       $deck_id = $this->db->query("SELECT max(deck_id) FROM f_deck;");
       $deck_id = $deck_id[0]['max(deck_id)'];
       $_SESSION['deck_id'] = $deck_id;
       $_SESSION['title'] = $title;
       $this->db->query("insert into creates_deck (deck_id,user_id) values (?,?);", "ss", $deck_id,$_SESSION['user_id']);
+      if(isset($_POST['uva_course'])){
+        $uva_course = $_POST["uva_course"];
+        $uva_course = explode(" ",$uva_course,2);
+        $data = $this->db->query('select * from uva_course where course_pn = ? and course_nbr = ?;',"ss",$uva_course[0],$uva_course[1]);
+        if($data){
+          $this->db->query('insert into assigned_to_course (deck_id,course_pn,course_nbr) values (?,?,?);',"sss",$deck_id,$uva_course[0],$uva_course[1]);
+        }
+      }
+
       header("Location: {$this->base_url}/deck/creation/");
     }
   }

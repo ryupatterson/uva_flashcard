@@ -24,16 +24,38 @@
     <!--Main Content-->
     <div class="container">
       <h1>Create Deck</h1>
-      <form id="deck_form" name='deck_creation' action="<?=$this->base_url?>/deck/create_deck/" method="post">
+      <form autocomplete="off" id="deck_form" name='deck_creation' action="<?=$this->base_url?>/deck/create_deck/" method="post">
         <div>
           <label for="deck_title">Title</label>
-          <input type="text" id="deck_title" name="deck_title"/>
+          <input type="text" id="deck_title" name="deck_title" required>
+        </div>
+        <div >
+          <label for="public">Make public?</label>
+          <input type="checkbox" id="make_public" name='make_public'>
+        </div>
+        <div class="autocomplete" style="width:300px;">
+          <label for="uva_course">Associated Course?</label>
+          <input id="myInput" type="text" name="uva_course" placeholder="Search classes...">
         </div>
         <div>
           <button type="submit">Create Deck</button>
         </div>
       </form>
     </div>
+    <?php
+      $course_array = $this->db->query("select course_pn, course_nbr from uva_course;");
+      $output = [];
+      foreach($course_array as $course){
+        $string = $course["course_pn"]." ".$course['course_nbr'];
+        array_push($output, $string);
+      }
+     ?>
+     <script type="text/javascript" src="<?=$this->base_url?>/views/js/searchbar_script.js"></script>
+     <script type="text/javascript">
+      let searchable = <?php echo json_encode($output);?>;
+      console.log(searchable);
+      autocomplete(document.getElementById("myInput"), searchable);
+     </script>
     <!--Footer-->
     <footer>
       <div>
