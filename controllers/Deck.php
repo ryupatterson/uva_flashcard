@@ -51,7 +51,7 @@ class Deck {
       $_SESSION['deck_id'] = $deck_id;
       $_SESSION['title'] = $title;
       $this->db->query("insert into creates_deck (deck_id,user_id) values (?,?);", "ss", $deck_id,$_SESSION['user_id']);
-      header("Location: {$this->base_url}/deck/creation");
+      header("Location: {$this->base_url}/deck/creation/");
     }
   }
 

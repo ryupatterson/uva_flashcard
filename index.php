@@ -18,7 +18,6 @@ $base_url = $config->getURL();
 
 $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 $path = substr($path,1,-1);
-echo $path;
 #$path = str_replace($base_url."/", "", $path);
 $parts = explode("/", $path);
 
