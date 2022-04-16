@@ -63,7 +63,7 @@ class Deck {
       $entry_answer = $_GET['entry_answer'];
       $this->db->query("insert into f_entry (deck_id,entry_def,entry_answer) values (?,?,?);", "sss",
       $_SESSION['deck_id'],$entry_def,$entry_answer);
-      header("Location: {$this->base_url}/deck/creation");
+      header("Location: {$this->base_url}/deck/creation/");
     }
   }
 }
