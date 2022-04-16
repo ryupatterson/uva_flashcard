@@ -16,9 +16,10 @@ session_start();
 $config = new Config();
 $base_url = $config->getURL();
 
-$path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+#$path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 $path = substr($path,1,-1);
-#$path = str_replace($base_url."/", "", $path);
+echo $path;
+$path = str_replace($base_url."/", "", $path);
 $parts = explode("/", $path);
 
 // path has a form "/account/login", "search/search_form", "quiz/quiz_form"
