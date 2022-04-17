@@ -24,9 +24,8 @@
     <!--Main Content-->
 
     <div class="container">
-      <p></p>
-      <h2>Recently used: </h2>
       <div class="container">
+          <h2>Recently used: </h2>
           <div class="row">
               <?php
                   foreach ($my_decks as $deck):?>
