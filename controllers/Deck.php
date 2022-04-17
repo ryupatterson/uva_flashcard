@@ -146,6 +146,10 @@ class Deck {
 
   public function share(){
     $deck_id = $_GET['deck_id'];
+    $deck = $this->db->query("select * from f_deck where deck_id = ?;","s",$deck_id);
+    if($deck[0]["public"]==0){
+      $this->db->query('update f_deck set public = 1 where deck_id = ?;',"s",$deck_id);
+    }
     include "views/share.php";
   }
 }
