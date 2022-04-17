@@ -39,6 +39,10 @@
           <label for="public">Make public?</label>
           <input type="checkbox" id="make_public" name='make_public'>
         </div>
+        <div>
+          <label for="public">Make favorite?</label>
+          <input type="checkbox" id="make_fav" name='make_fav'>
+        </div>
         <div class="autocomplete" style="width:300px;">
           <label for="uva_course">Associated Course?</label>
           <input id="myInput" type="text" name="uva_course" placeholder="Search classes...">

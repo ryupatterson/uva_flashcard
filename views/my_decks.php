@@ -34,6 +34,10 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+        .star {
+          font-size: 25px;
+	        color:gold;
+        }
     </style>
 
   </head>
@@ -53,7 +57,12 @@
                   <div class="col-4">
                       <div class="card mb-4; shadow-sm mb-4 bg-white rounded">
                           <div class="card-body">
-                              <h5 class="card-title"><?=$deck["title"]?></h5>
+                              <h5 class="card-title"><?=$deck["title"]?>
+                              </h5>
+                              <label for="id-of-input" class="custom-checkbox">
+                                <span> Favorite? </span>
+                                <input type="checkbox" id="id-of-input"/>
+                              </label>
                               <p class="card-text">Course:
                                   <?php
                                     $course = $this->db->query("select course_pn,course_nbr from assigned_to_course where deck_id = ?;","s",$deck["deck_id"]);
