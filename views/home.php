@@ -24,7 +24,7 @@
     <!--Main Content-->
 
     <div class="container">
-      <div class="container">
+      <div class="container" style="margin:auto; margin-top: 20px;">
           <h2>Recently used: </h2>
           <div class="row">
               <?php
