@@ -63,6 +63,12 @@ class Deck {
       case "delete_folder":
         $this->delete_folder();
         break;
+      case "fav_deck":
+        $this->favorite_deck();
+        break;
+      case "unfav_deck":
+        $this->unfavorite_deck();
+        break;
     default:
       $this->redirect();
     }
@@ -271,6 +277,27 @@ class Deck {
     $delete_relationship = $this->db->query('delete from  assigned_to_folder where folder_id =?',"s",$folder_id);
     header("Location: {$this->base_url}/");
   }
+
+  public function favorite_deck(){
+    if(!isset($_SESSION['username'])){
+      header("Location: {$this->base_url}/");
+    } else{
+      $deck_id = $_POST['deck_id'];
+      $this->db->query("insert into favorites (deck_id, user_id) values (?,?);", "ss", $deck_id,$_SESSION['user_id']);
+      header("Location: {$this->base_url}/account/my_decks/");
+    }
+  }
+
+  public function unfavorite_deck(){
+    if(!isset($_SESSION['username'])){
+      header("Location: {$this->base_url}/");
+    } else{
+      $deck_id = $_POST['deck_id'];
+      $this->db->query("delete from favorites where deck_id = ?;", "s", $deck_id);
+      header("Location: {$this->base_url}/account/my_decks/");
+    }
+  }
+
 }
 
 
