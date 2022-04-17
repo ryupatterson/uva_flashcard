@@ -24,18 +24,40 @@
     <!--Main Content-->
 
     <div class="container">
-      <p></p>
-      <h2>Some of your decks... </h2>
       <div class="container">
-      <table>
-        <?php
-        foreach ($my_decks as $deck):?>
-        <tr>
-          <td><?= $deck["title"]?></td>
-        </tr>
-        <?php endforeach; ?>
-      </table>
-      
+          <h2>Recently used: </h2>
+          <div class="row">
+              <?php
+                  foreach ($my_decks as $deck):?>
+                  <div class="col-4">
+                      <div class="card mb-4; shadow-sm mb-4 bg-white rounded">
+                          <div class="card-body">
+                              <h5 class="card-title"><?=$deck["title"]?></h5>
+                              <p class="card-text">Course:
+                                  <?php
+                                    $course = $this->db->query("select course_pn,course_nbr from assigned_to_course where deck_id = ?;","s",$deck["deck_id"]);
+                                    if($course){
+                                      $string = $course[0]["course_pn"].$course[0]["course_nbr"];
+                                    } else{
+                                      $string = "N/A";
+                                    }
+                                 ?><?=$string?></p>
+                              <p class="card-text">Number of Cards:
+                                  <?php
+                                  $num_cards =  $this->db->query("select count(*) from f_entry where deck_id = ?;","s",$deck["deck_id"]);
+                                  $string = $num_cards[0]["count(*)"];
+                                  ?><?=$string?></p>
+                              <a style="background-color: rgb(255, 102, 102); border-color: rgb(255, 102, 102)" href="<?=$this->base_url?>/deck/creation/?deck_id=<?=$deck['deck_id']?>"
+                                 class="btn btn-primary">
+                                  See More
+                              </a>
+                          </div>
+                      </div>
+                  </div>
+              <?php endforeach; ?>
+          </div>
+      </div>
+
     </div>
 
       <p></p>

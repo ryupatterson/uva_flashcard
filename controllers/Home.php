@@ -29,6 +29,9 @@ class Home {
   }
 
   public function go_to_home() {
+    $my_decks = $this->db->query(
+      "select * from f_deck WHERE deck_id in (select deck_id from recent where user_id = ?) group by deck_id;"
+    , "s", $_SESSION['user_id']);
     include "views/home.php";
   }
 
