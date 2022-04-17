@@ -17,6 +17,25 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
     <script src="https://use.fontawesome.com/0604459c37.js"></script>
+
+    <style>
+        .card-img-top {
+            width: 100%;
+            height: 15vw;
+            object-fit: cover;
+        }
+        .card-title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .card-text {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+
   </head>
   <body>
   <!--Top Navigation / Header bar-->
@@ -24,16 +43,42 @@
     <!--Main Content-->
     <div class="container">
       <h1>My Decks</h1>
-      <table>
-        <?php
-        foreach ($my_decks as $deck):?>
-        <tr>
-          <td><a href="<?=$this->base_url?>/deck/creation/?deck_id=<?=$deck['deck_id']?>"><?= $deck["title"]?></a></td>
-        </tr>
-        <?php endforeach; ?>
-      </table>
+
+      <div class="container">
+          <div class="row">
+              <?php
+                  foreach ($my_decks as $deck):?>
+                  <div class="col-4">
+                      <div class="card mb-4; shadow-sm mb-4 bg-white rounded">
+                          <div class="card-body">
+                              <h5 class="card-title"><?=$deck["title"]?></h5>
+                              <p class="card-text">Course:
+                                  <?php
+                                    $course = $this->db->query("select course_pn,course_nbr from assigned_to_course where deck_id = ?;","s",$deck["deck_id"]);
+                                    if($course){
+                                      $string = $course[0]["course_pn"].$course[0]["course_nbr"];
+                                    } else{
+                                      $string = "N/A";
+                                    }
+                                 ?><?=$string?></p>
+                              <p class="card-text">Number of Cards:
+                                  <?php
+                                  $num_cards =  $this->db->query("select count(*) from f_entry where deck_id = ?;","s",$deck["deck_id"]);
+                                  $string = $num_cards[0]["count(*)"];
+                                  ?><?=$string?></p>
+                              <a style="background-color: rgb(255, 102, 102); border-color: rgb(255, 102, 102)" href="<?=$this->base_url?>/deck/creation/?deck_id=<?=$deck['deck_id']?>"
+                                 class="btn btn-primary">
+                                  See More
+                              </a>
+                          </div>
+                      </div>
+                  </div>
+              <?php endforeach; ?>
+          </div>
+      </div>
     </div>
     <!--Footer-->
+    <br></br>
     <footer>
       <div>
         <small>

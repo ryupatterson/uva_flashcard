@@ -29,6 +29,7 @@
         text-align: center;
         padding: 20px 16px;
         text-decoration: none;
+        font-size:20px
     }
 
     /* Change the link color to #111 (black) on hover */
