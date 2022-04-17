@@ -16,6 +16,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://use.fontawesome.com/0604459c37.js"></script>
 
     <style>
@@ -38,6 +39,9 @@
           font-size: 25px;
 	        color:gold;
         }
+        .checked {
+          color: orange;
+        }
     </style>
 
   </head>
@@ -57,12 +61,8 @@
                   <div class="col-4">
                       <div class="card mb-4; shadow-sm mb-4 bg-white rounded">
                           <div class="card-body">
-                              <h5 class="card-title"><?=$deck["title"]?>
+                              <h5 class="card-title"><?=$deck["title"]?> 
                               </h5>
-                              <label for="id-of-input" class="custom-checkbox">
-                                <span> Favorite? </span>
-                                <input type="checkbox" id="id-of-input"/>
-                              </label>
                               <p class="card-text">Course:
                                   <?php
                                     $course = $this->db->query("select course_pn,course_nbr from assigned_to_course where deck_id = ?;","s",$deck["deck_id"]);
@@ -77,10 +77,44 @@
                                   $num_cards =  $this->db->query("select count(*) from f_entry where deck_id = ?;","s",$deck["deck_id"]);
                                   $string = $num_cards[0]["count(*)"];
                                   ?><?=$string?></p>
-                              <a style="background-color: rgb(255, 102, 102); border-color: rgb(255, 102, 102)" href="<?=$this->base_url?>/deck/creation/?deck_id=<?=$deck['deck_id']?>"
-                                 class="btn btn-primary">
-                                  See More
-                              </a>
+                              <div class="row">
+                                <div class="col-3">
+                                  <form action="<?=$this->base_url?>/deck/delete/" method="POST">
+                                    <a style="background-color: rgb(255, 102, 102); border-color: rgb(255, 102, 102)" href="<?=$this->base_url?>/deck/creation/?deck_id=<?=$deck['deck_id']?>"
+                                       class="btn btn-primary">
+                                        Edit
+                                    </a>
+                                  </div>
+                                <div class="col-4">
+                                    <input type="hidden" name="deck_id" value="<?=$deck['deck_id']?>">
+                                    <button type="submit" class='btn btn-danger' name="submit" value="Delete Deck"> Delete </button>
+                                  </form>
+                                </div>
+                                
+                                <div class="col-2">
+                                <?php if(!empty($fav_decks)){
+                                        foreach($fav_decks as $row){
+                                          $fav = false;
+                                          if($row["deck_id"] == $deck['deck_id']){
+                                            $fav = true;
+                                            break;
+                                          }
+                                        }
+                                      } else {$fav = false;} ?>
+                                
+                                <?php if($fav) : ?>
+                                  <form action="<?=$this->base_url?>/deck/unfav_deck/" method="POST">
+                                  <input type="hidden" name="deck_id" value="<?=$deck['deck_id']?>">
+                                  <button type="submit" class='btn btn-primary' name="submit" value="unfav"> <span class="fa fa-star checked"></span> </button>
+                                  </form>
+                                <?php else : ?>
+                                  <form action="<?=$this->base_url?>/deck/fav_deck/" method="POST">
+                                  <input type="hidden" name="deck_id" value="<?=$deck['deck_id']?>">
+                                  <button type="submit" class='btn btn-secondary' name="submit" value="fav"> <span class="fa fa-star"></span> </button>
+                                  </form>
+                                <?php endif; ?>
+                                </div>
+                              </div>
                           </div>
                       </div>
                   </div>

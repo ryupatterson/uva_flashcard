@@ -51,10 +51,19 @@
         }
        ?>
        <div class="row" style="margin-top: 25px;">
-         <div class="col-10" style="margin-bottom: 50px;">
-           <h1>Working on <?=$_SESSION['title']?> <?=$string?></h1>
+         <div class="col-9" style="margin-bottom: 50px;">
+           <h1><?=$_SESSION['title']?> <?=$string?></h1>
          </div>
-         <div class="col-2">
+         <div class="col-3">
+           <?php if($fav) : ?>
+           <a href="<?=$this->base_url?>/deck/unfavorite/">
+            <button  class="btn btn-warning" name="fav">Favorited</button>
+           </a>
+           <?php else : ?>
+          <a  href="<?=$this->base_url?>/deck/favorite/">
+            <button class="btn btn-secondary" name="unfav">Unfavorited</button>
+          </a>
+           <?php endif; ?>
            <button onClick="to_open();" class="btn btn-primary" name="share" value="Share">Share</button>
            <a href="<?=$this->base_url?>/deck/quiz/?deck_id=<?=$_SESSION['deck_id']?>">
              <button class="btn btn-secondary" name="quiz">Quiz</button>

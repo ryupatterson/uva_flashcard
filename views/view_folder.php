@@ -19,6 +19,61 @@
     <script src="https://use.fontawesome.com/0604459c37.js"></script>
   </head>
   <body>
+    <style>
+        .form-popup {
+        display: none;
+        position: fixed;
+        left: 50%;
+        bottom: 40%;
+        transform: translate(-50%, 0);
+        border: 3px solid #f1f1f1;
+        z-index: 9;
+        }
+
+        /* Add styles to the form container */
+        .form-container {
+        max-width: 300px;
+        padding: 10px;
+        background-color: white;
+        }
+
+        /* Full-width input fields */
+        .form-container input[type=text], .form-container input[type=password] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        border: none;
+        background: #f1f1f1;
+        }
+
+        /* When the inputs get focus, do something */
+        .form-container input[type=text]:focus, .form-container input[type=password]:focus {
+        background-color: #ddd;
+        outline: none;
+        }
+
+        /* Set a style for the submit/login button */
+        .form-container .btn {
+        background-color: #04AA6D;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom:10px;
+        opacity: 0.8;
+        }
+
+        /* Add a red background color to the cancel button */
+        .form-container .cancel {
+        background-color: red;
+        }
+
+        /* Add some hover effects to buttons */
+        .form-container .btn:hover, .open-button:hover {
+        opacity: 1;
+        }
+    </style>
   <!--Top Navigation / Header bar-->
     <?php include "header.php" ?>
     <!--Main Content-->
@@ -30,22 +85,62 @@
             <div class="col-4">
                 <div class="card mb-4; shadow-sm mb-4 bg-white rounded">
                     <div class="card-body">
-                        <h5 class="card-title">Create Folder</h5>
-                        <p class="card-text"> ""    </p>
+                        <h5 class="card-title">Add to Folder</h5>
+                        <p class="card-text"><br></p>
+                        <p class='card-text'><br></p>
                         <a style="background-color: rgb(255, 102, 102); border-color: rgb(255, 102, 102)" onclick="openForm()"
                            class="btn btn-primary">
-                            Make Folder
+                            Add to Folder
                         </a>
                         <div class="form-popup" id="myForm">
-                          <form action="<?=$this->base_url?>/deck/make_folder/" class="form-container" method="POST">
-                            <h1>Create Folder</h1>
+                          <form autocomplete="off" action="<?=$this->base_url?>/deck/add_to_folder/?folder_id=<?=$folder_id?>" class="form-container" method="POST">
+                            <h1>Search Decks</h1>
 
-                            <label for="Title"><b>Title</b></label>
-                            <input type="text" placeholder="Enter Title" name="folder_title" required>
+                            <label for="Title"><b>Deck Title</b></label>
+                            <div class="autocomplete">
+                              <input id="myInput" type="text" placeholder="Search for decks..." name="deck_title" required>
+                            </div>
 
-                            <button type="submit" class="btn">Create</button>
+
+                            <button type="submit" class="btn">Add</button>
                             <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
                           </form>
+                          <?php
+                          $my_decks = $this->db->query(
+                            "select title from f_deck WHERE deck_id in (select deck_id from creates_deck where user_id = ?) group by deck_id;", "s", $_SESSION['user_id']);
+                            $pub_decks = $this->db->query(
+                              "select title from f_deck WHERE deck_id in (select deck_id from creates_deck where user_id <> ?) and public = 1 group by deck_id;", "s", $_SESSION['user_id']);
+                            $output = $my_decks + $pub_decks;
+                            $decks_in_folder = $this->db->query('select title from f_deck where deck_id in (select deck_id from assigned_to_folder where folder_id = ?) group by deck_id;',"s",$folder_id);
+                            $new = [];
+                            $count = 0;
+                            foreach($output as $row){
+                              $val = $row["title"];
+                              $new[$count] = $val;
+                              $count++;
+                            }
+                            $new2 = [];
+                            $count = 0;
+                            foreach($decks_in_folder as $row){
+                              $val = $row["title"];
+                              $new2[$count] = $val;
+                              $count++;
+                            }
+                            $diffed = array_diff($new, $new2);
+                            $output = [];
+                            $count = 1;
+                            foreach($diffed as $row){
+                              $val = $row;
+                              $output[$count-1] = $val;
+                              $count++;
+                            }
+                           ?>
+                           <script type="text/javascript" src="<?=$this->base_url?>/views/js/searchbar_script_folder.js"></script>
+                           <script type="text/javascript">
+                            let searchable = <?php echo json_encode($output);?>;
+                            console.log(searchable);
+                            autocomplete(document.getElementById("myInput"), searchable);
+                           </script>
                         </div>
                     </div>
                 </div>

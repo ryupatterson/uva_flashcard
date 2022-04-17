@@ -79,6 +79,8 @@ class Account {
     $my_decks = $this->db->query(
       "select * from f_deck WHERE deck_id in (select deck_id from creates_deck where user_id = ?) group by deck_id;"
     , "s", $_SESSION['user_id']);
+    $fav_decks = $this->db->query(
+      "select * from favorites WHERE user_id = ?;" , "s", $_SESSION['user_id']);
     include "views/my_decks.php";
   }
   private function logout() {

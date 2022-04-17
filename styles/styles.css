@@ -154,7 +154,6 @@ section #subheading {
 section h1 a {
   font-size: 5rem;
   font-weight: bold;
-  color: var(--main-theme);
 }
 section img {
   margin: 4rem;
@@ -273,6 +272,7 @@ footer {
   background-color: var(--sub-theme);
   height: 50px;
   padding: 1rem 2rem;
+  margin-top: 50px;
 }
 footer div {
   display: flex;

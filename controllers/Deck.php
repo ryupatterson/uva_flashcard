@@ -54,6 +54,21 @@ class Deck {
       case "view_folder":
         $this->view_folder();
         break;
+      case "add_to_folder":
+        $this->add_to_folder();
+        break;
+      case "delete":
+        $this->delete();
+        break;
+      case "delete_folder":
+        $this->delete_folder();
+        break;
+      case "fav_deck":
+        $this->favorite_deck();
+        break;
+      case "unfav_deck":
+        $this->unfavorite_deck();
+        break;
     default:
       $this->redirect();
     }
@@ -69,13 +84,21 @@ class Deck {
     $fav_decks = $this->db->query(
       "select * from favorites WHERE user_id = ?;" , "s", $_SESSION['user_id']);
     if(!empty($fav_decks)){
-      if($fav_decks && in_array($_SESSION['deck_id'], $fav_decks[0])){
-        $fav = TRUE;
-      } else{
-        $fav = FALSE;
+      $fav = false;
+      foreach($fav_decks as $row){
+        if($row['deck_id'] == $_SESSION['deck_id']){
+          $fav = true;
+        }
       }
-    }else{$fav=FALSE;}
-    include "views/creating_deck.php";
+    } else{
+      $fav=FALSE;
+    }
+    $my_deck = $this->db->query("select user_id from creates_deck where deck_id = ?;","s",$_SESSION['deck_id'])[0]['user_id'];
+    if(($my_deck != $_SESSION['user_id'])){
+      header("Location: {$this->base_url}/deck/view/?deck_id={$_SESSION['deck_id']}");
+    } else{
+      include "views/creating_deck.php";
+    }
   }
   public function create_deck(){
     if(!isset($_SESSION['username'])){
@@ -108,20 +131,31 @@ class Deck {
         }
       }
 
-      header("Location: {$this->base_url}/deck/creation/?deck_id={$_GET['deck_id']}");
+      header("Location: {$this->base_url}/deck/creation/?deck_id={$_SESSION['deck_id']}");
     }
   }
 
   public function view_deck(){
     $deck_id = $_GET['deck_id'];
+    $user = $this->db->query('select user_id from creates_deck where deck_id=?;',"s",$deck_id);
     $deck = $this->db->query("select * from f_deck where deck_id=?;","s",$deck_id);
-    $user = $this->db->query('select user_id from creates_deck where deck_id=?;',"s",$deck_id)[0]['user_id'];
     if($user == $_SESSION['user_id']){
       header("Location: {$this->base_url}/deck/creation/?deck_id={$deck_id}");
     } else if($deck[0]['public'] == 0){
       header("Location: {$this->base_url}/");
     } else{
-
+      $fav_decks = $this->db->query(
+        "select * from favorites WHERE user_id = ?;" , "s", $_SESSION['user_id']);
+      if(!empty($fav_decks)){
+        $fav = false;
+        foreach($fav_decks as $row){
+          if($row['deck_id'] == $_SESSION['deck_id']){
+            $fav = true;
+          }
+        }
+      } else{
+        $fav=FALSE;
+      }
       $_SESSION['deck_id'] = $_GET['deck_id'];
       $_SESSION['title'] = $this->db->query('select title from f_deck WHERE deck_id=?;',"s",$_SESSION['deck_id'])[0]['title'];
       include "views/viewing_deck.php";
@@ -166,6 +200,10 @@ class Deck {
     $entries = $this->db->query("select * FROM f_entry WHERE deck_id=?;","s",$_SESSION['deck_id']);
     shuffle($entries);
     $_SESSION['deck_id'] = $_GET['deck_id'];
+    $count = $this->db->query("SELECT count(DISTINCT ?) from recent","s",$_SESSION['user_id'])[0]['count(DISTINCT ?)'];
+    if($count > 3){
+      $this->db->query("delete from `recent` where user_id = ? LIMIT ?","ss",$_SESSION['user_id'],$count-3);
+    }
     $this->db->query("INSERT INTO `recent` (`deck_id`, `user_id`) VALUES (?,?)","ss",$_SESSION['deck_id'],$_SESSION['user_id']);
     include "views/quiz.php";
   }
@@ -210,11 +248,56 @@ class Deck {
     $folder_id = $_GET['folder_id'];
     $folder_title = $this->db->query("select title from f_folder where folder_id = ?;","s",$folder_id)[0]['title'];
 
-    $this->db->query('select * from f_folder where folder_id = ?;',"s",$folder_id);
-    $decks = $this->db->query('select deck_id from assigned_to_folder where folder_id = ?;',"s",$folder_id);
-
+    $deck_ids = $this->db->query('select deck_id from assigned_to_folder where folder_id = ?;',"s",$folder_id);
+    $decks = $this->db->query('select * from f_deck where deck_id in (select deck_id from assigned_to_folder where folder_id = ?);',"s",$folder_id);
     include "views/view_folder.php";
   }
+
+  public function add_to_folder(){
+    $folder_id = $_GET["folder_id"];
+    $deck_title = $_POST['deck_title'];
+    $deck = $this->db->query("select * from f_deck where title = ?;","s",$deck_title);
+    if($deck){
+      $this->db->query('insert into assigned_to_folder (folder_id,deck_id) values (?,?);',"ss",$folder_id,$deck[0]["deck_id"]);
+    }
+
+    header("Location: {$this->base_url}/deck/view_folder/?folder_id={$folder_id}");
+  }
+
+  public function delete(){
+    $deck_id = $_POST['deck_id'];
+    $delete = $this->db->query('delete from f_deck where deck_id =?',"s",$deck_id);
+    $delete_relationship = $this->db->query('delete from creates_deck where deck_id =?',"s",$deck_id);
+    header("Location: {$this->base_url}/account/my_decks/");
+  }
+
+  public function delete_folder(){
+    $folder_id = $_POST['folder_id'];
+    $delete = $this->db->query('delete from f_folder where folder_id =?',"s",$folder_id);
+    $delete_relationship = $this->db->query('delete from  assigned_to_folder where folder_id =?',"s",$folder_id);
+    header("Location: {$this->base_url}/");
+  }
+
+  public function favorite_deck(){
+    if(!isset($_SESSION['username'])){
+      header("Location: {$this->base_url}/");
+    } else{
+      $deck_id = $_POST['deck_id'];
+      $this->db->query("insert into favorites (deck_id, user_id) values (?,?);", "ss", $deck_id,$_SESSION['user_id']);
+      header("Location: {$this->base_url}/account/my_decks/");
+    }
+  }
+
+  public function unfavorite_deck(){
+    if(!isset($_SESSION['username'])){
+      header("Location: {$this->base_url}/");
+    } else{
+      $deck_id = $_POST['deck_id'];
+      $this->db->query("delete from favorites where deck_id = ?;", "s", $deck_id);
+      header("Location: {$this->base_url}/account/my_decks/");
+    }
+  }
+
 }
 
 
