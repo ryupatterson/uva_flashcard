@@ -83,18 +83,18 @@
                   <div class="col-8">
                     <p><?=$entry['entry_answer']?></p>
                   </div>
-                  <div class="col-2">
-                    <form id="entry_edit" name="edit_entry" action="<?=$this->base_url?>/deck/edit_entry/" method="get">
-                      <input type="hidden" name="entry_id" value="<?=$entry['entry_id']?>">
+                  <!-- <div class="col-2">
+                    <form id="entry_edit" name="edit_entry" action="<//?=$this->base_url?>/deck/edit_entry/" method="get">
+                      <input type="hidden" name="entry_id" value="<//?=$entry['entry_id']?>">
                       <button type="submit" class='btn btn-primary' name="button">Edit</button>
                     </form>
                   </div>
                   <div class="col-2">
-                    <form id="entry_remove" name="remove_entry" action="<?=$this->base_url?>/deck/remove_entry/" method="get">
-                      <input type="hidden" name="entry_id" value="<?=$entry['entry_id']?>">
+                    <form id="entry_remove" name="remove_entry" action="<//?=$this->base_url?>/deck/remove_entry/" method="get">
+                      <input type="hidden" name="entry_id" value="<//?=$entry['entry_id']?>">
                       <button type="submit" class='btn btn-danger' name="button">Remove</button>
                     </form>
-                  </div>
+                  </div> -->
                 </div>
 
               </div>
