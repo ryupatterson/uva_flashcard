@@ -53,6 +53,7 @@
        <div class="row" style="margin-top: 25px;">
          <div class="col-9" style="margin-bottom: 50px;">
            <h1>Working on <?=$_SESSION['title']?> <?=$string?></h1>
+           <a target="_blank" href="<?=$this->base_url?>/deck/export/?deck_id=<?=$_SESSION['deck_id']?>"><button class="btn btn-secondary" onclick="downloadJSON()" name="download">Download as JSON</button></a>
          </div>
          <div class="col-3">
          <?php if($fav) : ?>
@@ -77,6 +78,7 @@
        </script>
         <?php
         $entries = $this->db->query("select * FROM f_entry WHERE deck_id=?;","s",$_SESSION['deck_id']);
+
         foreach ($entries as $entry):?>
 
         <div class="card mt-2; shadow-sm p-3 mb-2 bg-white rounded">
@@ -103,6 +105,7 @@
               </div>
 
               </div>
+              <script scr="<?=$this->base_url?>/views/js/toxml.js"></script>
             <script type="text/javascript">
               function edit_entry(){
                 const word = document.getElementById("complete");
@@ -159,8 +162,6 @@
               }
             </script>
         <?php endforeach; ?>
-
-      <br></br>
       <form id="deck_form" name='deck_creation' action="<?=$this->base_url?>/deck/add_entry/" method="get">
         <div class style="width:300px;">
           <label for="entry_def">Word: </label>

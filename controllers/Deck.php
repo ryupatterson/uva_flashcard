@@ -69,6 +69,9 @@ class Deck {
       case "unfav_deck":
         $this->unfavorite_deck();
         break;
+      case "export":
+        $this->export_deck();
+        break;
     default:
       $this->redirect();
     }
@@ -298,6 +301,18 @@ class Deck {
     }
   }
 
+  public function export_deck(){
+    $_SESSION['deck_id'] = $_GET['deck_id'];
+    $entries = $this->db->query("select * FROM f_entry WHERE deck_id=?;","s",$_SESSION['deck_id']);
+
+    foreach($entries as $k => $row){
+      unset($row['deck_id']);
+      unset($row['entry_id']);
+      $entries[$k] = $row;
+    }
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode($entries, JSON_PRETTY_PRINT);
+  }
 }
 
 

@@ -53,6 +53,7 @@
        <div class="row" style="margin-top: 25px;">
          <div class="col-9" style="margin-bottom: 50px;">
            <h1><?=$_SESSION['title']?> <?=$string?></h1>
+           <a target="_blank" href="<?=$this->base_url?>/deck/export/?deck_id=<?=$_SESSION['deck_id']?>"><button class="btn btn-secondary" onclick="downloadJSON()" name="download">Download as JSON</button></a>
          </div>
          <div class="col-3">
            <?php if($fav) : ?>
