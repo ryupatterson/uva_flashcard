@@ -5,7 +5,7 @@
     <title></title>
   </head>
   <body>
-    <input type="text" id="url" value="https://uva-flashcard.herokuapp.com<?=$this->base_url?>/deck/view/?deck_id=<?=$_SESSION['deck_id']?>">
+    <input style='width: 450px;'type="text" id="url" value="https://uva-flashcard.herokuapp.com<?=$this->base_url?>/deck/view/?deck_id=<?=$_SESSION['deck_id']?>">
     <button type="button" onclick="copy_text()">Copy Text</button>
   </body>
   <script type="text/javascript">

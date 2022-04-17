@@ -453,6 +453,9 @@ span {
   flex-flow: row wrap;
 }
 
+#url{
+  width: 100%;
+}
 .recent_text{
   color: var(--sub-theme);
   padding: 3px;
