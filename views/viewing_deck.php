@@ -31,7 +31,19 @@
           $string = "";
         }
        ?>
-      <h1><?=$_SESSION['title']?> <?=$string?></h1>
+       <div class="row">
+         <div class="col-8">
+           <h1><?=$_SESSION['title']?> <?=$string?></h1>
+         </div>
+         <div class="col-2">
+           <button type="btn btn-primary" name="share">Share</button>
+         </div>
+         <div class="col-2">
+           <a href="<?=$this->base_url?>/deck/quiz/?deck_id=<?=$_SESSION['deck_id']?>">
+             <button type="btn btn-primary" name="quiz">Quiz</button>
+           </a>
+         </div>
+       </div>
         <?php
         $entries = $this->db->query("select * FROM f_entry WHERE deck_id=?;","s",$_SESSION['deck_id']);
         foreach ($entries as $entry):?>

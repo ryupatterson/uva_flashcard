@@ -23,6 +23,28 @@
     <?php include "header.php" ?>
     <!--Main Content-->
 
+    <div class="container">
+      <p></p>
+      <h2>Some of your decks... </h2>
+      <div class="container">
+      <table>
+        <?php
+        foreach ($my_decks as $deck):?>
+        <tr>
+          <td><?= $deck["title"]?></td>
+        </tr>
+        <?php endforeach; ?>
+      </table>
+      
+    </div>
+
+      <p></p>
+      <h2>You might like... </h2>
+
+
+
+    </div>
+
     <!--Footer-->
     <footer>
       <div>

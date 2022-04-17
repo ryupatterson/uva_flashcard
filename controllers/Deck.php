@@ -30,10 +30,16 @@ class Deck {
         break;
       case "add_entry":
         $this->add_entry();
+        break;
       case "remove_entry":
         $this->remove_entry();
+        break;
       case "edit_entry":
         $this->edit_entry();
+        break;
+      case "quiz":
+        $this->quiz();
+        break;
     default:
       $this->redirect();
     }
@@ -102,7 +108,7 @@ class Deck {
       $entry_answer = $_GET['entry_answer'];
       $this->db->query("insert into f_entry (deck_id,entry_def,entry_answer) values (?,?,?);", "sss",
       $_SESSION['deck_id'],$entry_def,$entry_answer);
-      header("Location: {$this->base_url}/deck/creation/");
+      header("Location: {$this->base_url}/deck/creation/?deck_id={$_SESSION['deck_id']}");
     }
   }
 
@@ -125,6 +131,14 @@ class Deck {
       $entry_id);
       header("Location: {$this->base_url}/deck/creation/?deck_id={$_SESSION['deck_id']}");
     }
+  }
+
+  public function quiz(){
+    $entries = $this->db->query("select * FROM f_entry WHERE deck_id=?;","s",$_SESSION['deck_id']);
+    shuffle($entries);
+    $_SESSION['deck_id'] = $_GET['deck_id'];
+        $this->db->query("insert into uses (deck_id, user_id) values (?,?);","ss",$_SESSION['deck_id'],$_SESSION['user_id'],);
+    include "views/quiz.php";
   }
 }
 
