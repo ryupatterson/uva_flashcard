@@ -88,8 +88,8 @@ class Deck {
       $fav=FALSE;
     }
     $my_deck = $this->db->query("select user_id from creates_deck where deck_id = ?;","s",$_SESSION['deck_id'])[0]['user_id'];
-    if(!($my_deck == $_SESSION['user_id'])){
-      header("Location: {$this->base_url}/deck/view/?deck_id={$deck_id}");
+    if(($my_deck != $_SESSION['user_id'])){
+      header("Location: {$this->base_url}/deck/view/?deck_id={$_SESSION['deck_id']}");
     } else{
       include "views/creating_deck.php";
     }
@@ -125,20 +125,31 @@ class Deck {
         }
       }
 
-      header("Location: {$this->base_url}/deck/creation/?deck_id={$_GET['deck_id']}");
+      header("Location: {$this->base_url}/deck/creation/?deck_id={$_SESSION['deck_id']}");
     }
   }
 
   public function view_deck(){
     $deck_id = $_GET['deck_id'];
+    $user = $this->db->query('select user_id from creates_deck where deck_id=?;',"s",$deck_id);
     $deck = $this->db->query("select * from f_deck where deck_id=?;","s",$deck_id);
-    $user = $this->db->query('select user_id from creates_deck where deck_id=?;',"s",$deck_id)[0]['user_id'];
     if($user == $_SESSION['user_id']){
       header("Location: {$this->base_url}/deck/creation/?deck_id={$deck_id}");
     } else if($deck[0]['public'] == 0){
       header("Location: {$this->base_url}/");
     } else{
-
+      $fav_decks = $this->db->query(
+        "select * from favorites WHERE user_id = ?;" , "s", $_SESSION['user_id']);
+      if(!empty($fav_decks)){
+        $fav = false;
+        foreach($fav_decks as $row){
+          if($row['deck_id'] == $_SESSION['deck_id']){
+            $fav = true;
+          }
+        }
+      } else{
+        $fav=FALSE;
+      }
       $_SESSION['deck_id'] = $_GET['deck_id'];
       $_SESSION['title'] = $this->db->query('select title from f_deck WHERE deck_id=?;',"s",$_SESSION['deck_id'])[0]['title'];
       include "views/viewing_deck.php";
