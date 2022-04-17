@@ -36,15 +36,20 @@
            <h1>Working on <?=$_SESSION['title']?> <?=$string?></h1>
          </div>
          <div class="col-2">
-           <button class="btn btn-primary" name="share" onlick="popup()">Share</button>
+           <input type="button" onClick="to_open()" class="btn btn-primary" name="share" value="Share">
            <a href="<?=$this->base_url?>/deck/quiz/?deck_id=<?=$_SESSION['deck_id']?>">
              <button class="btn btn-secondary" name="quiz">Quiz</button>
            </a>
          </div>
+         <script type="text/javascript">
+
+         </script>
        </div>
        <script type="text/javascript">
-        var popup = document.getElementById("myPopup");
-        popup.classList.toggle("show");
+        function to_open(){
+          window.open('<?=$this->base_url?>/deck/share/?deck_id=<?=$_SESSION['deck_id']?>',"Ratting","width=550,
+          height=170,left=150,top=200,toolbar=0,status=0,");
+        }
        </script>
         <?php
         $entries = $this->db->query("select * FROM f_entry WHERE deck_id=?;","s",$_SESSION['deck_id']);
