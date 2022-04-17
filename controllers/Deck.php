@@ -43,6 +43,11 @@ class Deck {
       case "share":
         $this->share();
         break;
+      case "favorite":
+        $this->favorite();
+        break;
+      case "unfavorite":
+        $this->unfavorite();
       case "make_folder":
         $this->create_folder();
         break;
@@ -63,11 +68,13 @@ class Deck {
     $_SESSION['title'] = $this->db->query('select title from f_deck WHERE deck_id=?;',"s",$_SESSION['deck_id'])[0]['title'];
     $fav_decks = $this->db->query(
       "select * from favorites WHERE user_id = ?;" , "s", $_SESSION['user_id']);
-    if($fav_decks && in_array($_SESSION['deck_id'], $fav_decks[0])){
-      $fav = TRUE;
-    } else{
-      $fav = FALSE;
-    }
+    if(!empty($fav_decks)){
+      if($fav_decks && in_array($_SESSION['deck_id'], $fav_decks[0])){
+        $fav = TRUE;
+      } else{
+        $fav = FALSE;
+      }
+    }else{$fav=FALSE;}
     include "views/creating_deck.php";
   }
   public function create_deck(){
@@ -170,6 +177,25 @@ class Deck {
       $this->db->query('update f_deck set public = 1 where deck_id = ?;',"s",$deck_id);
     }
     include "views/share.php";
+  }
+
+
+  public function favorite(){
+    if(!isset($_SESSION['username'])){
+      header("Location: {$this->base_url}/");
+    } else{
+      $this->db->query("insert into favorites (deck_id, user_id) values (?,?);", "ss", $_SESSION['deck_id'],$_SESSION['user_id']);
+      header("Location: {$this->base_url}/deck/creation/?deck_id={$_SESSION['deck_id']}");
+    }
+  }
+
+  public function unfavorite(){
+    if(!isset($_SESSION['username'])){
+      header("Location: {$this->base_url}/");
+    } else{
+      $this->db->query("delete from favorites where deck_id = ?;", "s", $_SESSION['deck_id']);
+      header("Location: {$this->base_url}/deck/creation/?deck_id={$_SESSION['deck_id']}");
+    }
   }
 
   public function create_folder(){
