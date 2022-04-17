@@ -195,7 +195,6 @@ class Deck {
     shuffle($entries);
     $_SESSION['deck_id'] = $_GET['deck_id'];
     $count = $this->db->query("SELECT count(DISTINCT ?) from recent","s",$_SESSION['user_id'])[0]['count(DISTINCT ?)'];
-    echo $count;
     if($count > 3){
       $this->db->query("delete from `recent` where user_id = ? LIMIT ?","ss",$_SESSION['user_id'],$count-3);
     }
@@ -243,9 +242,8 @@ class Deck {
     $folder_id = $_GET['folder_id'];
     $folder_title = $this->db->query("select title from f_folder where folder_id = ?;","s",$folder_id)[0]['title'];
 
-    $this->db->query('select * from f_folder where folder_id = ?;',"s",$folder_id);
-    $decks = $this->db->query('select * from f_deck where deck_id in (select deck_id from assigned_to_folder where folder_id = ?) group by deck_id;',"s",$folder_id);
-    print_r($decks);
+    $deck_ids = $this->db->query('select deck_id from assigned_to_folder where folder_id = ?;',"s",$folder_id);
+    $decks = $this->db->query('select * from f_deck where deck_id in (select deck_id from assigned_to_folder where folder_id = ?);',"s",$folder_id);
     include "views/view_folder.php";
   }
 

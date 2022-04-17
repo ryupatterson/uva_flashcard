@@ -157,8 +157,8 @@
                                 <h5 class="card-title"><?=$folder["title"]?></h5>
                                 <p class="card-text">Number of Decks:
                                     <?php
-                                    $num_cards =  $this->db->query("select count(*) from assigned_to_folder where folder_id = ?;","s",$folder["folder_id"]);
-                                    $string = $num_cards[0]["count(*)"];
+                                    $num_decks =  $this->db->query("select count(*) from assigned_to_folder where folder_id = ?;","s",$folder["folder_id"]);
+                                    $string = $num_decks[0]["count(*)"];
                                     ?><?=$string?></p>
                                     <div class="row">
                                       <form action="<?=$this->base_url?>/deck/delete_folder/" method="POST">
