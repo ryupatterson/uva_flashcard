@@ -50,7 +50,7 @@
 </head>
 
 <ul>
-    <li><a href="<?=$this->base_url?>"><i class="fa fa-home" style="font-size:25px"></i></a></li>
+    <li><a href="<?=$this->base_url?>/"><i class="fa fa-home" style="font-size:25px"></i></a></li>
     <li><a href="<?=$this->base_url?>/account/my_decks/">My Decks</a></li>
     <li><a href="<?=$this->base_url?>/deck/redirect/">Create Deck</a></li>
     <li style="float:right"><a href="<?=$this->base_url?>/account/logout">Logout</a></li>
