@@ -30,7 +30,6 @@ if (!isset($_SESSION["username"])) {
   $parts[0] = "account";
   $parts[1] = "login";
 }
-print_r($parts);
 // pass the parsed url to main controller
 $main = new Main();
 $main->run($parts);
