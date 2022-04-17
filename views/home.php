@@ -59,8 +59,8 @@
       </div>
 
       <p></p>
-      <h2>Your favorites:</h2>
       <div class="container">
+          <h2>Your favorites:</h2>
           <div class="row">
               <?php
                   foreach ($fav_decks as $deck):?>
@@ -99,6 +99,7 @@
     </div>
 
     <!--Footer-->
+    <br></br>
     <footer>
       <div>
         <small>
