@@ -74,20 +74,17 @@
         foreach ($entries as $entry):?>
 
         <div class="card mt-2; shadow-sm p-3 mb-2 bg-white rounded">
-            <div class="row">
-              <div class="col-4">
-                <p><?=$entry['entry_def']?></p>
+            <div class="row" id="complete">
+              <div class="col-4" id='word'>
+                <p name="word"><?=$entry['entry_def']?></p>
               </div>
               <div class="col-8">
                 <div class="row">
-                  <div class="col-8">
-                    <p><?=$entry['entry_answer']?></p>
+                  <div class="col-8" id="answer">
+                    <p name="answer" ><?=$entry['entry_answer']?></p>
                   </div>
                   <div class="col-2">
-                    <form id="entry_edit" name="edit_entry" action="<?=$this->base_url?>/deck/edit_entry/" method="get">
-                      <input type="hidden" name="entry_id" value="<?=$entry['entry_id']?>">
-                      <button type="submit" class='btn btn-primary' name="button">Edit</button>
-                    </form>
+                      <button type="submit" class='btn btn-primary' onclick="edit_entry();">Edit</button>
                   </div>
                   <div class="col-2">
                     <form id="entry_remove" name="remove_entry" action="<?=$this->base_url?>/deck/remove_entry/" method="get">
@@ -96,14 +93,67 @@
                     </form>
                   </div>
                 </div>
+                </div>
+              </div>
 
               </div>
-            </div>
-        </div>
+            <script type="text/javascript">
+              function edit_entry(){
+                const word = document.getElementById("complete");
 
+                word.innerHTML = `
+                <form id="entry_edit" name='edit_entry' action="<?=$this->base_url?>/deck/edit_entry/" method="POST" >
+                <div class="row">
+                  <input type="hidden" name="entry_id" value="<?=$entry['entry_id']?>">
+                  <div class='col-4'>
+                    <input type="text" name="edited_word" style='' value="<?=$entry['entry_def']?>">
+                  </div>
+                  <div class='col-8'>
+                    <div class="row">
+                      <div class="col-8" id="answer">
+                        <input type="text" name="edited_def" style=''value="<?=$entry['entry_answer']?>">
+                      </div>
+                      <div class='col-2'>
+                        <button type="submit" class='btn btn-primary' name="button">Submit</button>
+                      </div>
+                      <div class='col-2'>
+                        <button type="reset" class='btn btn-danger' name="button" onclick="cancel();">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </form>
+                `;
+              }
+
+              function cancel(){
+                const word = document.getElementById("complete");
+
+                word.innerHTML = `
+                <div class="col-4" id='word'>
+                  <p name="word"><?=$entry['entry_def']?></p>
+                </div>
+                <div class="col-8">
+                  <div class="row">
+                    <div class="col-8" id="answer">
+                      <p name="answer"><?=$entry['entry_answer']?></p>
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" class='btn btn-primary' onclick="edit_entry();">Edit</button>
+                    </div>
+                    <div class="col-2">
+                      <form id="entry_remove" name="remove_entry" action="<?=$this->base_url?>/deck/remove_entry/" method="get">
+                        <input type="hidden" name="entry_id" value="<?=$entry['entry_id']?>">
+                        <button type="submit" class='btn btn-danger' name="button">Remove</button>
+                      </form>
+                    </div>
+                  </div>
+                  </div>
+                `;
+              }
+            </script>
         <?php endforeach; ?>
 
-      </table>
       <br></br>
       <form id="deck_form" name='deck_creation' action="<?=$this->base_url?>/deck/add_entry/" method="get">
         <div class style="width:300px;">

@@ -133,9 +133,11 @@ class Deck {
     if(!isset($_SESSION['username'])){
       header("Location: {$this->base_url}/");
     } else{
-      $entry_id = $_GET['entry_id'];
-      $this->db->query("delete from f_entry where entry_id = ?;", "s",
-      $entry_id);
+      $entry_id = $_POST['entry_id'];
+      $word = $_POST['edited_word'];
+      $def = $_POST['edited_def'];
+      $this->db->query("update f_entry set entry_def = ?, entry_answer = ? where entry_id = ? and deck_id = ?;", "ssss",
+      $word,$def,$entry_id,$_SESSION['deck_id']);
       header("Location: {$this->base_url}/deck/creation/?deck_id={$_SESSION['deck_id']}");
     }
   }
