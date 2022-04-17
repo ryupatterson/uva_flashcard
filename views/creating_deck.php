@@ -57,11 +57,11 @@
          <div class="col-3">
          <?php if($fav) : ?>
          <a href="<?=$this->base_url?>/deck/unfavorite">
-          <button type="submit" class="btn btn-warning" name="fav">Favorited</button>
+          <button  class="btn btn-warning" name="fav">Favorited</button>
          </a>
          <?php else : ?>
-        <a href="<?=$this->base_url?>/deck/favorite">
-          <button type="submit" class="btn btn-secondary" name="unfav"> Unfavorited</button>
+        <a  href="<?=$this->base_url?>/deck/favorite">
+          <button class="btn btn-secondary" name="unfav">Unfavorited</button>
         </a>
          <?php endif; ?>
            <button onClick="to_open();" class="btn btn-primary" name="share" value="Share">Share</button>
@@ -69,9 +69,6 @@
              <button class="btn btn-success" name="quiz">Quiz</button>
            </a>
          </div>
-         <script type="text/javascript">
-
-         </script>
        </div>
        <script type="text/javascript">
         function to_open(){
@@ -167,11 +164,11 @@
       <form id="deck_form" name='deck_creation' action="<?=$this->base_url?>/deck/add_entry/" method="get">
         <div class style="width:300px;">
           <label for="entry_def">Word: </label>
-          <input type="text" id="entry_def" name="entry_def"/>
+          <input type="text" id="entry_def" name="entry_def" required/>
         </div>
         <div class>
           <label for="entry_answer">Definition: </label>
-          <input type="text" id="entry_answer" name="entry_answer"/>
+          <input type="text" id="entry_answer" name="entry_answer" required/>
         </div>
         <br></br>
         <div class>

@@ -33,7 +33,7 @@
     }
 
     /* Change the link color to #111 (black) on hover */
-    a:hover {
+    .top_link:hover {
         background-color: rgb(191, 77, 77);
         color: white;
     }
@@ -50,9 +50,9 @@
 </head>
 
 <ul>
-    <li><a href="<?=$this->base_url?>/"><i class="fa fa-home" style="font-size:25px"></i></a></li>
-    <li><a href="<?=$this->base_url?>/account/my_decks/">My Decks</a></li>
-    <li><a href="<?=$this->base_url?>/deck/redirect/">Create Deck</a></li>
+    <li><a class="top_link" href="<?=$this->base_url?>/"><i class="fa fa-home" style="font-size:25px"></i></a></li>
+    <li><a class="top_link" href="<?=$this->base_url?>/account/my_decks/">My Decks</a></li>
+    <li><a class="top_link" href="<?=$this->base_url?>/deck/redirect/">Create Deck</a></li>
     <li style="float:right"><a href="<?=$this->base_url?>/account/logout">Logout</a></li>
 </ul>
 

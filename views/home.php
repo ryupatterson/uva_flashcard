@@ -121,7 +121,7 @@
                     <div class="card mb-4; shadow-sm mb-4 bg-white rounded">
                         <div class="card-body">
                             <h5 class="card-title">Create Folder</h5>
-                            <p class="card-text"> ""    </p>
+                            <p class="card-text"> <br>    </p>
                             <a style="background-color: rgb(255, 102, 102); border-color: rgb(255, 102, 102)" onclick="openForm()"
                                class="btn btn-primary">
                                 Make Folder
@@ -155,12 +155,12 @@
                         <div class="card mb-4; shadow-sm mb-4 bg-white rounded">
                             <div class="card-body">
                                 <h5 class="card-title"><?=$folder["title"]?></h5>
-                                <p class="card-text">Number of Cards:
+                                <p class="card-text">Number of Decks:
                                     <?php
-                                    $num_cards =  $this->db->query("select count(*) from assigned_to_folder where folder = ?;","s",$folder["folder_id"]);
+                                    $num_cards =  $this->db->query("select count(*) from assigned_to_folder where folder_id = ?;","s",$folder["folder_id"]);
                                     $string = $num_cards[0]["count(*)"];
                                     ?><?=$string?></p>
-                                <a style="background-color: rgb(255, 102, 102); border-color: rgb(255, 102, 102)"
+                                <a style="background-color: rgb(255, 102, 102); border-color: rgb(255, 102, 102)" href="<?=$this->base_url?>/deck/view_folder/?folder_id=<?=$folder['folder_id']?>"
                                    class="btn btn-primary">
                                     See More
                                 </a>
@@ -172,9 +172,9 @@
         </div>
       </div>
 
-      <div class="container" style="margin:auto; margin-top: 20px;">
+      <div class="container" style="margin:auto; margin-top: 20px; margin-bottom: 75px;">
         <h2>Your favorites:</h2>
-        <div class="container">
+        <div >
             <div class="row">
                 <?php
                     foreach ($fav_decks as $deck):?>

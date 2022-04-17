@@ -54,6 +54,8 @@ class Deck {
       case "view_folder":
         $this->view_folder();
         break;
+      case "add_to_folder":
+        $this->add_to_folder();
     default:
       $this->redirect();
     }
@@ -69,12 +71,15 @@ class Deck {
     $fav_decks = $this->db->query(
       "select * from favorites WHERE user_id = ?;" , "s", $_SESSION['user_id']);
     if(!empty($fav_decks)){
-      if($fav_decks && in_array($_SESSION['deck_id'], $fav_decks[0])){
-        $fav = TRUE;
-      } else{
-        $fav = FALSE;
+      $fav = false;
+      foreach($fav_decks as $row){
+        if($row['deck_id'] == $_SESSION['deck_id']){
+          $fav = true;
+        }
       }
-    }else{$fav=FALSE;}
+    } else{
+      $fav=FALSE;
+    }
     include "views/creating_deck.php";
   }
   public function create_deck(){
@@ -211,9 +216,18 @@ class Deck {
     $folder_title = $this->db->query("select title from f_folder where folder_id = ?;","s",$folder_id)[0]['title'];
 
     $this->db->query('select * from f_folder where folder_id = ?;',"s",$folder_id);
-    $decks = $this->db->query('select deck_id from assigned_to_folder where folder_id = ?;',"s",$folder_id);
-
+    $decks = $this->db->query('select * from f_deck where deck_id in (select deck_id from assigned_to_folder where folder_id = ?) group by deck_id;',"s",$folder_id);
+    print_r($decks);
     include "views/view_folder.php";
+  }
+
+  public function add_to_folder(){
+    $folder_id = $_GET["folder_id"];
+    $deck_title = $_POST['deck_title'];
+    $deck = $this->db->query("select * from f_deck where title = ?;","s",$deck_title);
+    $this->db->query('insert into assigned_to_folder (folder_id,deck_id) values (?,?);',"ss",$folder_id,$deck[0]["deck_id"]);
+
+    header("Location: {$this->base_url}/deck/view_folder/?folder_id={$folder_id}");
   }
 }
 
