@@ -40,6 +40,9 @@ class Deck {
       case "quiz":
         $this->quiz();
         break;
+      case "share":
+        $this->share();
+        break;
     default:
       $this->redirect();
     }
@@ -137,8 +140,13 @@ class Deck {
     $entries = $this->db->query("select * FROM f_entry WHERE deck_id=?;","s",$_SESSION['deck_id']);
     shuffle($entries);
     $_SESSION['deck_id'] = $_GET['deck_id'];
-        $this->db->query("insert into uses (deck_id, user_id) values (?,?);","ss",$_SESSION['deck_id'],$_SESSION['user_id'],);
+    $this->db->query("INSERT INTO `recent` (`deck_id`, `user_id`) VALUES (?,?)","ss",$_SESSION['deck_id'],$_SESSION['user_id']);
     include "views/quiz.php";
+  }
+
+  public function share(){
+    $deck_id = $_GET['deck_id'];
+    include "views/share.php";
   }
 }
 
