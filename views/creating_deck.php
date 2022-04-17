@@ -55,6 +55,11 @@
            <h1>Working on <?=$_SESSION['title']?> <?=$string?></h1>
          </div>
          <div class="col-2">
+         <?php if($fav) : ?>
+          <button class="btn btn-secondary" name="fav">Favorited</button>
+         <?php else : ?>
+          <button class="btn btn-secondary" name="unfav"> Not Favorited</button>
+         <?php endif; ?>
            <button onClick="to_open();" class="btn btn-primary" name="share" value="Share">Share</button>
            <a href="<?=$this->base_url?>/deck/quiz/?deck_id=<?=$_SESSION['deck_id']?>">
              <button class="btn btn-secondary" name="quiz">Quiz</button>

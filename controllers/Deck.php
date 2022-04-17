@@ -55,6 +55,13 @@ class Deck {
   public function creation(){
     $_SESSION['deck_id'] = $_GET['deck_id'];
     $_SESSION['title'] = $this->db->query('select title from f_deck WHERE deck_id=?;',"s",$_SESSION['deck_id'])[0]['title'];
+    $fav_decks = $this->db->query(
+      "select * from favorites WHERE user_id = ?;" , "s", $_SESSION['user_id']);
+    if(in_array($_SESSION['deck_id'], $fav_decks[0])){
+      $fav = TRUE;
+    } else{
+      $fav = FALSE;
+    }
     include "views/creating_deck.php";
   }
   public function create_deck(){
