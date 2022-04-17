@@ -42,7 +42,9 @@
     <?php include "header.php" ?>
     <!--Main Content-->
     <div class="container">
-      <h1>My Decks</h1>
+      <div style="margin:20px;">
+        <h1>My Decks</h1>
+      </div>
 
       <div class="container">
           <div class="row">
