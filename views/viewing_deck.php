@@ -49,11 +49,22 @@
         } else{
           $string = "";
         }
+          $created_user = $this->db->query("select user_id from creates_deck where deck_id = ?;","s",$_SESSION['deck_id'])[0]["user_id"];
+          $username = $this->db->query('select username from user where user_id = ?;',"s",$created_user)[0]['username'];
        ?>
        <div class="row" style="margin-top: 25px;">
          <div class="col-9" style="margin-bottom: 50px;">
-           <h1><?=$_SESSION['title']?> <?=$string?></h1>
-           <a target="_blank" href="<?=$this->base_url?>/deck/export/?deck_id=<?=$_SESSION['deck_id']?>"><button class="btn btn-secondary" onclick="downloadJSON()" name="download">Download as JSON</button></a>
+           <div>
+             <h1><?=$_SESSION['title']?> <?=$string?></h1>
+           </div>
+           <div class="row">
+             <div class="col-4">
+               <h4>Created by: <?=$username?></h4>
+             </div>
+             <div class="col-8">
+               <a target="_blank" href="<?=$this->base_url?>/deck/export/?deck_id=<?=$_SESSION['deck_id']?>"><button class="btn btn-secondary" onclick="downloadJSON()" name="download">Download as JSON</button></a>
+             </div>
+           </div>
          </div>
          <div class="col-3">
            <?php if($fav) : ?>

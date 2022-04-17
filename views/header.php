@@ -48,11 +48,15 @@
     </style>
 
 </head>
+<?php
+  $username = $this->db->query('select username from user where user_id =?;',"s",$_SESSION['user_id'])[0]['username'];
 
+ ?>
 <ul>
     <li><a class="top_link" href="<?=$this->base_url?>/"><i class="fa fa-home" style="font-size:25px"></i></a></li>
     <li><a class="top_link" href="<?=$this->base_url?>/account/my_decks/">My Decks</a></li>
     <li><a class="top_link" href="<?=$this->base_url?>/deck/redirect/">Create Deck</a></li>
+    <li style="color:white;"><a>Signed in as "<?=$username?>"</a></li>
     <li style="float:right"><a href="<?=$this->base_url?>/account/logout">Logout</a></li>
 </ul>
 
