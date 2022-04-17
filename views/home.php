@@ -183,7 +183,6 @@
 
       <div class="container" style="margin:auto; margin-top: 20px;">
         <h2>Your favorites:</h2>
-        <div class="container">
             <div class="row">
                 <?php
                     foreach ($fav_decks as $deck):?>
