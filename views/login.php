@@ -30,7 +30,7 @@
         </div>
         <div>
           <label for="password">Password</label>
-          <input type="text" id="password" name="password"/>
+          <input type="password" id="password" name="password" style='Width: 100%'/>
         </div>
         <div>
           <button type="submit">Log in / Create Account</button>
