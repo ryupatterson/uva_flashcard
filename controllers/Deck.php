@@ -87,7 +87,12 @@ class Deck {
     } else{
       $fav=FALSE;
     }
-    include "views/creating_deck.php";
+    $my_deck = $this->db->query("select user_id from creates_deck where deck_id = ?;","s",$_SESSION['deck_id'])[0]['user_id'];
+    if(!($my_deck == $_SESSION['user_id'])){
+      header("Location: {$this->base_url}/deck/view/?deck_id={$deck_id}");
+    } else{
+      include "views/creating_deck.php";
+    }
   }
   public function create_deck(){
     if(!isset($_SESSION['username'])){
@@ -178,6 +183,11 @@ class Deck {
     $entries = $this->db->query("select * FROM f_entry WHERE deck_id=?;","s",$_SESSION['deck_id']);
     shuffle($entries);
     $_SESSION['deck_id'] = $_GET['deck_id'];
+    $count = $this->db->query("SELECT count(DISTINCT ?) from recent","s",$_SESSION['user_id'])[0]['count(DISTINCT ?)'];
+    echo $count;
+    if($count > 3){
+      $this->db->query("delete from `recent` where user_id = ? LIMIT ?","ss",$_SESSION['user_id'],$count-3);
+    }
     $this->db->query("INSERT INTO `recent` (`deck_id`, `user_id`) VALUES (?,?)","ss",$_SESSION['deck_id'],$_SESSION['user_id']);
     include "views/quiz.php";
   }
