@@ -83,6 +83,7 @@ header {
 #header-logo:hover #menus {
   display: block;
 }
+
 #menus {
   position: absolute;
   top: 73px;
@@ -173,7 +174,7 @@ section #welcome-msg {
   height: 3.5rem;
   padding: 10px;
   font-size: 1.3rem;
-  color: var(--main-theme);
+  color: var(--sub-theme);
   margin: 1rem 0.5rem;
   border-radius: 3px;
 }
