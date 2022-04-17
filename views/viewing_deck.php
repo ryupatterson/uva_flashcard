@@ -23,15 +23,32 @@
     <?php include "header.php" ?>
     <!--Main Content-->
     <div class="container">
-      <h1>My Decks</h1>
-      <table>
+      <?php
+        $course = $this->db->query("select course_pn,course_nbr from assigned_to_course where deck_id = ?;","s",$_SESSION['deck_id']);
+        if($course){
+          $string = "(".$course[0]["course_pn"].$course[0]["course_nbr"].")";
+        } else{
+          $string = "";
+        }
+       ?>
+      <h1><?=$_SESSION['title']?> <?=$string?></h1>
         <?php
-        foreach ($my_decks as $deck):?>
-        <tr>
-          <td><a href="<?=$this->base_url?>/deck/creation/?deck_id=<?=$deck['deck_id']?>"><?= $deck["title"]?></a></td>
-        </tr>
+        $entries = $this->db->query("select * FROM f_entry WHERE deck_id=?;","s",$_SESSION['deck_id']);
+        foreach ($entries as $entry):?>
+        <div class="row search-entry">
+          <div class="col-4 left-col">
+            <p><?=$entry['entry_def']?></p>
+          </div>
+          <div class="col-8 right-col">
+            <div class="row inside-row">
+              <div class="col-8">
+                <p><?=$entry['entry_answer']?></p>
+              </div>
+            </div>
+
+          </div>
+        </div>
         <?php endforeach; ?>
-      </table>
     </div>
     <!--Footer-->
     <footer>

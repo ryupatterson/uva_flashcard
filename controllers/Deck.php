@@ -25,8 +25,15 @@ class Deck {
       case "create_deck":
         $this->create_deck();
         break;
+      case "view":
+        $this->view_deck();
+        break;
       case "add_entry":
         $this->add_entry();
+      case "remove_entry":
+        $this->remove_entry();
+      case "edit_entry":
+        $this->edit_entry();
     default:
       $this->redirect();
     }
@@ -37,6 +44,8 @@ class Deck {
   }
 
   public function creation(){
+    $_SESSION['deck_id'] = $_GET['deck_id'];
+    $_SESSION['title'] = $this->db->query('select title from f_deck WHERE deck_id=?;',"s",$_SESSION['deck_id'])[0]['title'];
     include "views/creating_deck.php";
   }
   public function create_deck(){
@@ -66,10 +75,25 @@ class Deck {
         }
       }
 
-      header("Location: {$this->base_url}/deck/creation/");
+      header("Location: {$this->base_url}/deck/creation/?deck_id={$_GET['deck_id']}");
     }
   }
 
+  public function view_deck(){
+    $deck_id = $_GET['deck_id'];
+    $deck = $this->db->query("select * from f_deck where deck_id=?;","s",$deck_id);
+    $user = $this->db->query('select user_id from creates_deck where deck_id=?;',"s",$deck_id)[0]['user_id'];
+    if($user == $_SESSION['user_id']){
+      header("Location: {$this->base_url}/deck/creation/?deck_id={$deck_id}");
+    } else if($deck[0]['public'] == 0){
+      header("Location: {$this->base_url}/");
+    } else{
+
+      $_SESSION['deck_id'] = $_GET['deck_id'];
+      $_SESSION['title'] = $this->db->query('select title from f_deck WHERE deck_id=?;',"s",$_SESSION['deck_id'])[0]['title'];
+      include "views/viewing_deck.php";
+    }
+  }
   public function add_entry(){
     if(!isset($_SESSION['username'])){
       header("Location: {$this->base_url}/");
@@ -79,6 +103,27 @@ class Deck {
       $this->db->query("insert into f_entry (deck_id,entry_def,entry_answer) values (?,?,?);", "sss",
       $_SESSION['deck_id'],$entry_def,$entry_answer);
       header("Location: {$this->base_url}/deck/creation/");
+    }
+  }
+
+  public function remove_entry(){
+    if(!isset($_SESSION['username'])){
+      header("Location: {$this->base_url}/");
+    } else{
+      $entry_id = $_GET['entry_id'];
+      $this->db->query("delete from f_entry where entry_id = ?;", "s",
+      $entry_id);
+      header("Location: {$this->base_url}/deck/creation/?deck_id={$_SESSION['deck_id']}");
+    }
+  }
+  public function edit_entry(){
+    if(!isset($_SESSION['username'])){
+      header("Location: {$this->base_url}/");
+    } else{
+      $entry_id = $_GET['entry_id'];
+      $this->db->query("delete from f_entry where entry_id = ?;", "s",
+      $entry_id);
+      header("Location: {$this->base_url}/deck/creation/?deck_id={$_SESSION['deck_id']}");
     }
   }
 }

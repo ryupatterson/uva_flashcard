@@ -24,7 +24,12 @@
     <!--Main Content-->
     <div class="container">
       <h1>Create Deck</h1>
-      <form autocomplete="off" id="deck_form" name='deck_creation' action="<?=$this->base_url?>/deck/create_deck/" method="post">
+      <?php
+        $query = $this->db->query('select max(deck_id) from f_deck;')[0]["max(deck_id)"];
+        $deck_id = intval($query) + 1;
+
+       ?>
+      <form autocomplete="off" id="deck_form" name='deck_creation' action="<?=$this->base_url?>/deck/create_deck/?deck_id=<?=$deck_id?>" method="post">
         <div>
           <label for="deck_title">Title</label>
           <input type="text" id="deck_title" name="deck_title" required>

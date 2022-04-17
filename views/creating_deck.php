@@ -32,14 +32,34 @@
         }
        ?>
       <h1>Working on <?=$_SESSION['title']?> <?=$string?></h1>
-      <table>
         <?php
         $entries = $this->db->query("select * FROM f_entry WHERE deck_id=?;","s",$_SESSION['deck_id']);
         foreach ($entries as $entry):?>
-        <tr>
-          <td><?= $entry["entry_def"]?></td>
-          <td><?= $entry["entry_answer"]?></td>
-        </tr>
+        <div class="row search-entry">
+          <div class="col-4 left-col">
+            <p><?=$entry['entry_def']?></p>
+          </div>
+          <div class="col-8 right-col">
+            <div class="row inside-row">
+              <div class="col-8">
+                <p><?=$entry['entry_answer']?></p>
+              </div>
+              <div class="col-2">
+                <form id="entry_edit" name="edit_entry" action="<?=$this->base_url?>/deck/edit_entry/" method="get">
+                  <input type="hidden" name="entry_id" value="<?=$entry['entry_id']?>">
+                  <button type="submit" class='btn btn-primary' name="button">Edit</button>
+                </form>
+              </div>
+              <div class="col-2">
+                <form id="entry_remove" name="remove_entry" action="<?=$this->base_url?>/deck/remove_entry/" method="get">
+                  <input type="hidden" name="entry_id" value="<?=$entry['entry_id']?>">
+                  <button type="submit" class='btn btn-danger' name="button">Remove</button>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
         <?php endforeach; ?>
       </table>
       <form id="deck_form" name='deck_creation' action="<?=$this->base_url?>/deck/add_entry/" method="get">
