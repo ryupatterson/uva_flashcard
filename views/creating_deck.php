@@ -51,7 +51,7 @@
         }
        ?>
        <div class="row" style="margin-top: 25px;">
-         <div class="col-6">
+         <div class="col-10" style="margin-bottom: 50px;">
            <h1>Working on <?=$_SESSION['title']?> <?=$string?></h1>
          </div>
          <div class="col-2">
