@@ -21,10 +21,12 @@ function getTerm(){
   if(index == 0){
     console.log('get_term');
     prevButton.disabled = true;
+  } if( index == (entries.length-1) ){
+    nextButton.disabled = true;
   }
   curr_term = entries[index]["entry_def"];
   curr_def = entries[index]['entry_answer'];
-  term.innerHTML = `<b>${curr_term}</b>`;
+  term.innerHTML = `<span><h4><b>${curr_term}</b></h4></span>`;
   def.innerHTML = `<span><h4>${curr_def}</h4></span>`;
 }
 
