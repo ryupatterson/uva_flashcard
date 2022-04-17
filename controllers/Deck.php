@@ -196,6 +196,7 @@ class Deck {
       $this->db->query("delete from favorites where deck_id = ?;", "s", $_SESSION['deck_id']);
       header("Location: {$this->base_url}/deck/creation/?deck_id={$_SESSION['deck_id']}");
     }
+  }
 
   public function create_folder(){
     $folder_title = $_POST['folder_title'];
