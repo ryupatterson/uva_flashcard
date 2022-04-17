@@ -56,11 +56,11 @@
          </div>
          <div class="col-3">
            <?php if($fav) : ?>
-           <a href="<?=$this->base_url?>/deck/unfavorite">
+           <a href="<?=$this->base_url?>/deck/unfavorite/">
             <button  class="btn btn-warning" name="fav">Favorited</button>
            </a>
            <?php else : ?>
-          <a  href="<?=$this->base_url?>/deck/favorite">
+          <a  href="<?=$this->base_url?>/deck/favorite/">
             <button class="btn btn-secondary" name="unfav">Unfavorited</button>
           </a>
            <?php endif; ?>
