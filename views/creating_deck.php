@@ -51,11 +51,11 @@
         }
        ?>
        <div class="row" style="margin-top: 25px;">
-         <div class="col-6">
+         <div class="col-10" style="margin-bottom: 50px;">
            <h1>Working on <?=$_SESSION['title']?> <?=$string?></h1>
          </div>
          <div class="col-2">
-           <input type="button" onClick="to_open()" class="btn btn-primary" name="share" value="Share">
+           <button onClick="to_open();" class="btn btn-primary" name="share" value="Share">Share</button>
            <a href="<?=$this->base_url?>/deck/quiz/?deck_id=<?=$_SESSION['deck_id']?>">
              <button class="btn btn-secondary" name="quiz">Quiz</button>
            </a>
@@ -66,8 +66,7 @@
        </div>
        <script type="text/javascript">
         function to_open(){
-          window.open('<?=$this->base_url?>/deck/share/?deck_id=<?=$_SESSION['deck_id']?>',"Ratting","width=550,
-          height=170,left=150,top=200,toolbar=0,status=0,");
+          window.open('\<?=$this->base_url?>/deck/share/?deck_id=<?=$_SESSION['deck_id']?>','_blank','location=yes,height=200,width=520,scrollbars=yes,status=yes');
         }
        </script>
         <?php
