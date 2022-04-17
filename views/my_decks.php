@@ -77,10 +77,16 @@
                                   $num_cards =  $this->db->query("select count(*) from f_entry where deck_id = ?;","s",$deck["deck_id"]);
                                   $string = $num_cards[0]["count(*)"];
                                   ?><?=$string?></p>
-                              <a style="background-color: rgb(255, 102, 102); border-color: rgb(255, 102, 102)" href="<?=$this->base_url?>/deck/creation/?deck_id=<?=$deck['deck_id']?>"
-                                 class="btn btn-primary">
-                                  See More
-                              </a>
+                              <div class="row">
+                                <form action="<?=$this->base_url?>/deck/delete/" method="POST">
+                                  <a style="background-color: rgb(255, 102, 102); border-color: rgb(255, 102, 102)" href="<?=$this->base_url?>/deck/creation/?deck_id=<?=$deck['deck_id']?>"
+                                     class="btn btn-primary">
+                                      See More
+                                  </a>
+                                  <input type="hidden" name="deck_id" value="<?=$deck['deck_id']?>">
+                                  <button type="submit" class='btn btn-danger' name="submit" value="Delete Deck"> Delete Deck </button>
+                                </form>
+                              </div>
                           </div>
                       </div>
                   </div>

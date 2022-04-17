@@ -56,6 +56,13 @@ class Deck {
         break;
       case "add_to_folder":
         $this->add_to_folder();
+        break;
+      case "delete":
+        $this->delete();
+        break;
+      case "delete_folder":
+        $this->delete_folder();
+        break;
     default:
       $this->redirect();
     }
@@ -228,6 +235,20 @@ class Deck {
     $this->db->query('insert into assigned_to_folder (folder_id,deck_id) values (?,?);',"ss",$folder_id,$deck[0]["deck_id"]);
 
     header("Location: {$this->base_url}/deck/view_folder/?folder_id={$folder_id}");
+  }
+
+  public function delete(){
+    $deck_id = $_POST['deck_id'];
+    $delete = $this->db->query('delete from f_deck where deck_id =?',"s",$deck_id);
+    $delete_relationship = $this->db->query('delete from creates_deck where deck_id =?',"s",$deck_id);
+    header("Location: {$this->base_url}/account/my_decks/");
+  }
+
+  public function delete_folder(){
+    $folder_id = $_POST['folder_id'];
+    $delete = $this->db->query('delete from f_folder where folder_id =?',"s",$folder_id);
+    $delete_relationship = $this->db->query('delete from  assigned_to_folder where folder_id =?',"s",$folder_id);
+    header("Location: {$this->base_url}/");
   }
 }
 

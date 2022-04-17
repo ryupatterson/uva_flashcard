@@ -160,10 +160,16 @@
                                     $num_cards =  $this->db->query("select count(*) from assigned_to_folder where folder_id = ?;","s",$folder["folder_id"]);
                                     $string = $num_cards[0]["count(*)"];
                                     ?><?=$string?></p>
-                                <a style="background-color: rgb(255, 102, 102); border-color: rgb(255, 102, 102)" href="<?=$this->base_url?>/deck/view_folder/?folder_id=<?=$folder['folder_id']?>"
-                                   class="btn btn-primary">
-                                    See More
-                                </a>
+                                    <div class="row">
+                                      <form action="<?=$this->base_url?>/deck/delete_folder/" method="POST">
+                                        <a style="background-color: rgb(255, 102, 102); border-color: rgb(255, 102, 102)" href="<?=$this->base_url?>/deck/view_folder/?folder_id=<?=$folder['folder_id']?>"
+                                           class="btn btn-primary">
+                                            See More
+                                        </a>
+                                        <input type="hidden" name="folder_id" value="<?=$folder['folder_id']?>">
+                                        <button type="submit" class='btn btn-danger' name="submit" value="Delete Deck"> Delete Folder </button>
+                                      </form>
+                                    </div>
                             </div>
                         </div>
                     </div>
