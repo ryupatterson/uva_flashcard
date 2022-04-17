@@ -251,7 +251,9 @@ class Deck {
     $folder_id = $_GET["folder_id"];
     $deck_title = $_POST['deck_title'];
     $deck = $this->db->query("select * from f_deck where title = ?;","s",$deck_title);
-    $this->db->query('insert into assigned_to_folder (folder_id,deck_id) values (?,?);',"ss",$folder_id,$deck[0]["deck_id"]);
+    if($deck){
+      $this->db->query('insert into assigned_to_folder (folder_id,deck_id) values (?,?);',"ss",$folder_id,$deck[0]["deck_id"]);
+    }
 
     header("Location: {$this->base_url}/deck/view_folder/?folder_id={$folder_id}");
   }
