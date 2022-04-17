@@ -43,6 +43,12 @@ class Deck {
       case "share":
         $this->share();
         break;
+      case "make_folder":
+        $this->create_folder();
+        break;
+      case "view_folder":
+        $this->view_folder();
+        break;
     default:
       $this->redirect();
     }
@@ -57,7 +63,7 @@ class Deck {
     $_SESSION['title'] = $this->db->query('select title from f_deck WHERE deck_id=?;',"s",$_SESSION['deck_id'])[0]['title'];
     $fav_decks = $this->db->query(
       "select * from favorites WHERE user_id = ?;" , "s", $_SESSION['user_id']);
-    if(in_array($_SESSION['deck_id'], $fav_decks[0])){
+    if($fav_decks && in_array($_SESSION['deck_id'], $fav_decks[0])){
       $fav = TRUE;
     } else{
       $fav = FALSE;
@@ -164,6 +170,24 @@ class Deck {
       $this->db->query('update f_deck set public = 1 where deck_id = ?;',"s",$deck_id);
     }
     include "views/share.php";
+  }
+
+  public function create_folder(){
+    $folder_title = $_POST['folder_title'];
+    $this->db->query('insert into f_folder (user_id,title) values (?,?);',"ss",$_SESSION['user_id'],$folder_title);
+    $folder_id = $this->db->query('select max(folder_id) from f_folder')[0]["max(folder_id)"];
+
+    header("Location: {$this->base_url}/deck/view_folder/?folder_id={$folder_id}");
+  }
+
+  public function view_folder(){
+    $folder_id = $_GET['folder_id'];
+    $folder_title = $this->db->query("select title from f_folder where folder_id = ?;","s",$folder_id)[0]['title'];
+
+    $this->db->query('select * from f_folder where folder_id = ?;',"s",$folder_id);
+    $decks = $this->db->query('select deck_id from assigned_to_folder where folder_id = ?;',"s",$folder_id);
+
+    include "views/view_folder.php";
   }
 }
 
