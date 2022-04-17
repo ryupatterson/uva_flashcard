@@ -17,6 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
     <script src="https://use.fontawesome.com/0604459c37.js"></script>
+
   </head>
   <body>
   <!--Top Navigation / Header bar-->
@@ -29,12 +30,12 @@
         $deck_id = intval($query) + 1;
 
        ?>
-      <form autocomplete="off" id="deck_form" name='deck_creation' action="<?=$this->base_url?>/deck/create_deck/?deck_id=<?=$deck_id?>" method="post">
+      <form class="form" autocomplete="off" id="deck_form" name='deck_creation' action="<?=$this->base_url?>/deck/create_deck/?deck_id=<?=$deck_id?>" method="post">
         <div>
           <label for="deck_title">Title</label>
           <input type="text" id="deck_title" name="deck_title" required>
         </div>
-        <div >
+        <div>
           <label for="public">Make public?</label>
           <input type="checkbox" id="make_public" name='make_public'>
         </div>
@@ -42,8 +43,9 @@
           <label for="uva_course">Associated Course?</label>
           <input id="myInput" type="text" name="uva_course" placeholder="Search classes...">
         </div>
-        <div>
-          <button type="submit">Create Deck</button>
+        <br></br>
+        <div class="form-group">
+          <button style="background-color: rgb(255, 102, 102); border-color: rgb(255, 102, 102)" class="btn btn-primary" type="submit">Create Deck</button>
         </div>
       </form>
     </div>

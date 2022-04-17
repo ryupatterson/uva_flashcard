@@ -17,6 +17,25 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
     <script src="https://use.fontawesome.com/0604459c37.js"></script>
+
+    <style>
+        .card-img-top {
+            width: 100%;
+            height: 15vw;
+            object-fit: cover;
+        }
+        .card-title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .card-text {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+
   </head>
   <body>
   <!--Top Navigation / Header bar-->
@@ -54,48 +73,56 @@
         <?php
         $entries = $this->db->query("select * FROM f_entry WHERE deck_id=?;","s",$_SESSION['deck_id']);
         foreach ($entries as $entry):?>
-        <div class="row search-entry">
-          <div class="col-4 left-col">
-            <p><?=$entry['entry_def']?></p>
-          </div>
-          <div class="col-8 right-col">
-            <div class="row inside-row">
+
+        <div class="card mt-2; shadow-sm p-3 mb-2 bg-white rounded">
+            <div class="row">
+              <div class="col-4">
+                <p><?=$entry['entry_def']?></p>
+              </div>
               <div class="col-8">
-                <p><?=$entry['entry_answer']?></p>
-              </div>
-              <div class="col-2">
-                <form id="entry_edit" name="edit_entry" action="<?=$this->base_url?>/deck/edit_entry/" method="get">
-                  <input type="hidden" name="entry_id" value="<?=$entry['entry_id']?>">
-                  <button type="submit" class='btn btn-primary' name="button">Edit</button>
-                </form>
-              </div>
-              <div class="col-2">
-                <form id="entry_remove" name="remove_entry" action="<?=$this->base_url?>/deck/remove_entry/" method="get">
-                  <input type="hidden" name="entry_id" value="<?=$entry['entry_id']?>">
-                  <button type="submit" class='btn btn-danger' name="button">Remove</button>
-                </form>
+                <div class="row">
+                  <div class="col-8">
+                    <p><?=$entry['entry_answer']?></p>
+                  </div>
+                  <div class="col-2">
+                    <form id="entry_edit" name="edit_entry" action="<?=$this->base_url?>/deck/edit_entry/" method="get">
+                      <input type="hidden" name="entry_id" value="<?=$entry['entry_id']?>">
+                      <button type="submit" class='btn btn-primary' name="button">Edit</button>
+                    </form>
+                  </div>
+                  <div class="col-2">
+                    <form id="entry_remove" name="remove_entry" action="<?=$this->base_url?>/deck/remove_entry/" method="get">
+                      <input type="hidden" name="entry_id" value="<?=$entry['entry_id']?>">
+                      <button type="submit" class='btn btn-danger' name="button">Remove</button>
+                    </form>
+                  </div>
+                </div>
+
               </div>
             </div>
-
-          </div>
         </div>
+
         <?php endforeach; ?>
+
       </table>
+      <br></br>
       <form id="deck_form" name='deck_creation' action="<?=$this->base_url?>/deck/add_entry/" method="get">
-        <div>
-          <label for="entry_def">Word</label>
+        <div class style="width:300px;">
+          <label for="entry_def">Word: </label>
           <input type="text" id="entry_def" name="entry_def"/>
         </div>
-        <div>
-          <label for="entry_answer">Definition</label>
+        <div class>
+          <label for="entry_answer">Definition: </label>
           <input type="text" id="entry_answer" name="entry_answer"/>
         </div>
-        <div>
-          <button type="submit">add</button>
+        <br></br>
+        <div class>
+          <button style="background-color: rgb(255, 102, 102); border-color: rgb(255, 102, 102)" type="submit" class='btn btn-primary mb-3'>Add Entry</button>
         </div>
       </form>
     </div>
     <!--Footer-->
+    <br></br>
     <footer>
       <div>
         <small>
