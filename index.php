@@ -1,7 +1,7 @@
 <?php
 /*
  * Author(s): Ryu Patterson, Maven Kim, Quang Lam
- * url: http://cs.virginia.edu/~rjp5cc/uva_flashcard/
+ * url: https://uva-flashcard.herokuapp.com/
  */
 
 spl_autoload_register(function($classname) {

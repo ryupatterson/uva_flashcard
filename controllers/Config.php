@@ -1,6 +1,7 @@
 <?php
 /*
- * Author(s): Ryu Patterson
+ * Author(s): Ryu Patterson (rjp5cc), Maven Kim (mmk6xnb), Quang  Lam (qnl8ey)
+ url: https://uva-flashcard.herokuapp.com/
  */
 
 class Config {
